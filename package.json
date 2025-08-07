@@ -1,0 +1,7 @@
+{
+  "name": "pusher-auth-server",
+  "version": "1.0.0",
+  "dependencies": {
+    "pusher": "^5.0.0"
+  }
+}
