@@ -9,17 +9,26 @@ const pusher = new Pusher({
 });
 
 export default function handler(req, res) {
+  // ✅ Add CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // ✅ Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  // ✅ Only allow POST for actual auth
   if (req.method !== "POST") {
-    res.status(405).send("Method Not Allowed");
-    return;
+    return res.status(405).send("Method Not Allowed");
   }
 
   const socketId = req.body.socket_id;
   const channelName = req.body.channel_name;
 
   if (!socketId || !channelName) {
-    res.status(400).send("Missing socket_id or channel_name");
-    return;
+    return res.status(400).send("Missing socket_id or channel_name");
   }
 
   const auth = pusher.authenticate(socketId, channelName);
