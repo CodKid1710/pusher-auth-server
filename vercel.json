@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/pusher-auth.js": {
+      "memory": 128,
+      "maxDuration": 5
+    }
+  }
+}
