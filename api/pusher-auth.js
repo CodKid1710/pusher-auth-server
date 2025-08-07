@@ -31,6 +31,11 @@ export default function handler(req, res) {
     return res.status(400).send("Missing socket_id or channel_name");
   }
 
-  const auth = pusher.authenticate(socketId, channelName);
+  const presenceData = {
+    user_id: req.body.user_id,
+    user_info: { name: req.body.name || "Anonymous" }
+  };
+  
+  const auth = pusher.authenticate(socketId, channelName, presenceData);
   res.status(200).send(auth);
 }
